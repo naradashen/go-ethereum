@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:mantic-20240416
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
       apt-get -y install -y ca-certificates libssl1.1
