@@ -1972,7 +1972,7 @@ func (bc *BlockChain) insertChain(chain types.Blocks, verifySeals bool) (int, er
 		// Process block using the parent state as reference point
 		firehoseContext := firehose.NoOpContext
 		if firehose.Enabled {
-			firehoseContext = firehose.NewSpeculativeExecutionContextWithBuffer(firehose.BlockSyncBuffer)
+			firehoseContext = firehose.NewBlockContextWithBuffer(firehose.BlockSyncBuffer)
 		}
 
 		substart := time.Now()

@@ -260,9 +260,13 @@ func (g *Genesis) ToBlock(db ethdb.Database) *types.Block {
 	if db == nil {
 		db = rawdb.NewMemoryDatabase()
 	}
+
+	// Firehose: We do not log those as we are going to trace the genesis block on Blockchain start, so there is no
+	// need to log the genesis block creation.
+
 	statedb, _ := state.New(common.Hash{}, state.NewDatabase(db), nil)
 	for addr, account := range g.Alloc {
-		statedb.AddBalance(addr, account.Balance, false, firehose.NoOpContext, firehose.BalanceChangeReason("genesis_balance"))
+		statedb.AddBalance(addr, account.Balance, false, firehose.NoOpContext, firehose.IgnoredBalanceChangeReason)
 		statedb.SetCode(addr, account.Code, firehose.NoOpContext)
 		statedb.SetNonce(addr, account.Nonce, firehose.NoOpContext)
 		for key, value := range account.Storage {
